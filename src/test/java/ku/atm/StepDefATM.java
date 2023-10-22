@@ -1,3 +1,4 @@
+//6410451245 putita paiboontanasombut
 package ku.atm;
 
 import io.cucumber.java.Before;
@@ -67,7 +68,24 @@ public class StepDefATM {
     @Then("customer id {int} account balance is {float}")
     public void customer_id_account_balance_is(int id, double balance) {
         assertEquals(balance,
-                     bank.getCustomer(id).getAccount().getBalance());
+                bank.getCustomer(id).getAccount().getBalance());
     }
+    @Given("a customer with id {int} and pin {int} with balance {int} exists")
+    public void a_customer_with_id_and_pin_with_balance_exists(int id, int pin, int balance) {
+        bank.openAccount(new Customer(id, pin, balance));
+    }
+    @When("I deposit {int} into ATM")
+    public void i_deposit_into_atm(int amount) {
+        atm.deposit(amount);
+    }
+
+    @Then("my account balance {int}")
+    public void my_account_balance_is(int balance) {
+        assertEquals(balance, atm.getBalance(), 0.001);
+    }
+
+
+
+
 
 }
